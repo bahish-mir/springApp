@@ -1,0 +1,7 @@
+.idea/*
+
+webapp/*
+
+src/webapp/*
+
+*.jsp
