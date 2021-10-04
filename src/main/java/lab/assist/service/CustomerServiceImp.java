@@ -18,7 +18,9 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Customer getById(Long id) {
-        return customerRepository.getById(id);
+        return customerRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("BAD REQUEST")
+        );
     }
 
     @Override

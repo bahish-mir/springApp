@@ -36,7 +36,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid Customer customer) {
         HttpHeaders headers = new HttpHeaders();
 
@@ -49,7 +49,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("")
     public ResponseEntity<Customer> updateCustomer(@RequestBody @Valid Customer customer) {
         HttpHeaders headers = new HttpHeaders();
 
@@ -75,7 +75,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<Customer>> getAllCustomers() {
         List<Customer> customers = customerService.getAll();
 
