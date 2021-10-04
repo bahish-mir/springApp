@@ -5,10 +5,8 @@ import lab.assist.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,7 +21,7 @@ public class CustomerRestControllerV1 {
         this.customerService = customerService;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long customerId) {
         if (customerId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -38,7 +36,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid Customer customer) {
         HttpHeaders headers = new HttpHeaders();
 
@@ -51,8 +49,8 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> updateCustomer(@RequestBody @Valid Customer customer, UriComponentsBuilder builder) {
+    @PutMapping
+    public ResponseEntity<Customer> updateCustomer(@RequestBody @Valid Customer customer) {
         HttpHeaders headers = new HttpHeaders();
 
         if (customer == null) {
@@ -64,7 +62,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(customer, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         Customer customer = customerService.getById(id);
 
@@ -77,7 +75,7 @@ public class CustomerRestControllerV1 {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         List<Customer> customers = customerService.getAll();
 
