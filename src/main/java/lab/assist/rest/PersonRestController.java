@@ -1,48 +1,26 @@
 package lab.assist.rest;
 
 import lab.assist.model.Person;
-import lab.assist.service.PersonService;
+import lab.assist.service.PersonServiceImpl;
+import lab.assist.specifications.PersonSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/persons")
 public class PersonRestController {
-    private final PersonService personService;
+    private final PersonServiceImpl personService;
 
     @Autowired
-    public PersonRestController(PersonService personService) {
+    public PersonRestController(PersonServiceImpl personService) {
         this.personService = personService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getPerson(@PathVariable Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        Person person = personService.getPersonById(id);
-
-        if (person == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(person, HttpStatus.OK);
-    }
-
-    @GetMapping("")
-    public ResponseEntity<?> getAllPerson() {
-        List<Person> persons = personService.getAll();
-
-        if (persons.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(persons, HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<?> getAllPerson(PersonSpecification personSpecification) {
+        return new ResponseEntity<>(personService.find(personSpecification), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

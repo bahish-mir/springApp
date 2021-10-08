@@ -1,38 +1,19 @@
 package lab.assist.service;
 
 import lab.assist.model.Car;
-import lab.assist.repository.CarRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import lab.assist.specifications.CarSpecification;
 
 import java.util.List;
 
-@Service
-public class CarService {
-    private final CarRepo carRepo;
+public interface CarService {
 
-    @Autowired
-    public CarService(CarRepo carRepo) {
-        this.carRepo = carRepo;
-    }
+    List<Car> find(CarSpecification carSpecification);
 
-    public List<Car> getAll() {
-        return carRepo.findAll();
-    }
+    void updateCar(Car car);
 
-    public Car getCarById(Long id) {
-        return carRepo.getById(id);
-    }
+    void createCar(Car car);
 
-    public void updateCar(Car car) {
-        carRepo.save(car);
-    }
+    void deleteCarById(Long id);
 
-    public void createCar(Car car) {
-        carRepo.save(car);
-    }
-
-    public void deleteCarById(Long id) {
-        carRepo.deleteById(id);
-    }
+    Car getCarById(Long id);
 }
